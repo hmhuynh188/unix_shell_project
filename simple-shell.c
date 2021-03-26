@@ -2,17 +2,19 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/wait.h>
-#include <fcntl.h>
+#include <sys/wait.h> // is used with wait() 
+#include <fcntl.h> // changes the properties of a file that is already open 
 
 #define MAXLINE 80
 
 void freeArgs(char *args[],int argv) {
     int i = 0;
     while(args[i] != NULL && (i < argv)) {
-        free(args[i]);
+        free(args[i]); 
         i++;
-        if (i == 80) break;
+        if (i == 80) { 
+          break;
+        } 
     }
 }
 
