@@ -9,7 +9,7 @@
 
 void freeArgs(char *args[],int argv) {
     int i = 0;
-    while(args[i] != NULL && (i < argv)) {
+    while (args[i] != NULL && (i < argv)) {
         free(args[i]); 
         i++;
         if (i == 80) { 
@@ -24,6 +24,7 @@ void readCommandFromUser(char *args[], int *hasAmp, int *argv) {
     int length = 0;
     char delimiter[] = " ";
 
+    // read from STDIN 
     length = read(STDIN_FILENO, userCommand, 80);
 
     if (userCommand[length - 1] == '\n') {
