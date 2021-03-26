@@ -7,7 +7,6 @@
 
 #define MAXLINE 80
 
-
 void freeArgs(char *args[],int argv) {
     int i = 0;
     while(args[i] != NULL && (i < argv)) {
@@ -19,7 +18,6 @@ void freeArgs(char *args[],int argv) {
 
 void readCommandFromUser(char *args[], int *hasAmp, int *argv) {
 
-
     char userCommand[MAXLINE];
     int length = 0;
     char delimiter[] = " ";
@@ -30,7 +28,7 @@ void readCommandFromUser(char *args[], int *hasAmp, int *argv) {
         userCommand[length - 1] = '\0';
     }
 
-    if (strcmp(userCommand, "!!") == 0) {
+    if (strcmp(userCommand, "!!") == 0) { // strcmp() is used to compare the string arguments
         if (*argv == 0) {
             printf("No commands in history.\n");
         }
