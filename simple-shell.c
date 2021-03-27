@@ -7,7 +7,7 @@
 
 #define MAXLINE 80
 
-void freeArgs(char *args[],int argv) {
+void temp_max(char *args[],int argv) {
     int i = 0;
     while (args[i] != NULL && (i < argv)) {
         free(args[i]); 
@@ -42,7 +42,7 @@ void readCommandFromUser(char *args[], int *hasAmp, int *argv) {
       exit(0); 
     }
   
-    freeArgs(args, *argv);
+    temp_max(args, *argv);
     *argv = 0;
     *hasAmp = 0;
     char *ptr = strtok(userCommand, delimiter);
