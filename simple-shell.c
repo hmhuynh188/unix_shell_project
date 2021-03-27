@@ -84,7 +84,7 @@ int main(void) {
                     if (strcmp(args[i], "<") == 0) {
                         file = open(args[i + 1], O_RDONLY);
                         if (file == -1 || args[i+1]  == NULL) {
-                            printf("Invalid Command!\n");
+                            printf("Invalid.\n");
                             exit(1);
                         }
                         dup2(file, STDIN_FILENO);
@@ -95,7 +95,7 @@ int main(void) {
                     } else if (strcmp(args[i], ">") == 0) {
                         file = open(args[i + 1], O_WRONLY | O_CREAT, 0644);
                         if (file == -1 || args[i+1]  == NULL) {
-                            printf("Invalid Command!\n");
+                            printf("Invalid.\n");
                             exit(1);
                         }
                         dup2(file, STDOUT_FILENO);
@@ -112,16 +112,16 @@ int main(void) {
                             return 1;
                         }
                         
-                        char *firstCommand[i + 1];
-                        char *secondCommand[argv - i - 1 + 1];
+                        char *first[i + 1];
+                        char *second[argv - i - 1 + 1];
                         for (int j = 0; j < i; j++) {
-                            firstCommand[j] = args[j];
+                            first[j] = args[j];
                         }
-                        firstCommand[i] = NULL;
+                        first[i] = NULL;
                         for (int j = 0; j < argv - i - 1; j++) {
-                            secondCommand[j] = args[j + i + 1];
+                            second[j] = args[j + i + 1];
                         }
-                        secondCommand[argv - i - 1] = NULL;
+                        second[argv - i - 1] = NULL;
 
                         int pid_pipe = fork();
                         if (pid_pipe > 0) {
@@ -129,8 +129,8 @@ int main(void) {
                             close(fd1[1]);
                             dup2(fd1[0], STDIN_FILENO);
                             close(fd1[0]);
-                            if (execvp(secondCommand[0], secondCommand) == -1) {
-                                printf("Invalid Command!\n");
+                            if (execvp(second[0], second) == -1) {
+                                printf("Invalid.\n");
                                 return 1;
                             }
 
@@ -138,8 +138,8 @@ int main(void) {
                             close(fd1[0]);
                             dup2(fd1[1], STDOUT_FILENO);
                             close(fd1[1]);
-                            if (execvp(firstCommand[0], firstCommand) == -1) {
-                                printf("Invalid Command!\n");
+                            if (execvp(first[0], first) == -1) {
+                                printf("Invalid.\n");
                                 return 1;
                             }
                             exit(1);
@@ -152,7 +152,7 @@ int main(void) {
 
                 if (use_pipe == 0) {
                     if (execvp(args[0], args) == -1) {
-                        printf("Invalid Command!\n");
+                        printf("Invalid.\n");
                         return 1;
                     }
                 }
