@@ -66,9 +66,9 @@ int main(void) {
     pid_t pid;
     int has_ampersand = 0;
     int argv = 0;
-    int usingPipe = 0;
+    int use_pipe = 0;
     while (run) {
-        usingPipe = 0;
+        use_pipe = 0;
         printf("osh> ");
         fflush(stdout);
         read_user_command(args, &has_ampersand, &argv);
@@ -105,7 +105,7 @@ int main(void) {
                         break;
                 
                     } else if (strcmp(args[i], "|") == 0) {
-                        usingPipe = 1;
+                        use_pipe = 1;
                         int fd1[2];
                         if (pipe(fd1) == -1) {
                             fprintf(stderr, "Pipe Failed\n");
@@ -150,7 +150,7 @@ int main(void) {
                     }
                 }
 
-                if (usingPipe == 0) {
+                if (use_pipe == 0) {
                     if (execvp(args[0], args) == -1) {
                         printf("Invalid Command!\n");
                         return 1;
