@@ -62,12 +62,12 @@ void read_user_command(char *args[], int *has_ampersand, int *argv) {
 
 int main(void) {
     char *args[MAXLINE / 2 + 1]; 
-    int runFlag = 1;
+    int run = 1;
     pid_t pid;
     int has_ampersand = 0;
     int argv = 0;
     int usingPipe = 0;
-    while (runFlag) {
+    while (run) {
         usingPipe = 0;
         printf("osh> ");
         fflush(stdout);
