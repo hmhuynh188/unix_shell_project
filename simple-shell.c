@@ -18,34 +18,34 @@ void temp_max(char *args[],int argv) {
     }
 }
 
-void readCommandFromUser(char *args[], int *has_ampersand, int *argv) {
+void read_user_command(char *args[], int *has_ampersand, int *argv) {
 
-    char userCommand[MAXLINE];
+    char user_command[MAXLINE];
     int length = 0;
     char delimiter[] = " ";
 
     // read from STDIN 
-    length = read(STDIN_FILENO, userCommand, 80);
+    length = read(STDIN_FILENO, user_command, 80);
 
-    if (userCommand[length - 1] == '\n') {
-        userCommand[length - 1] = '\0';
+    if (user_command[length - 1] == '\n') {
+        user_command[length - 1] = '\0';
     }
 
-    if (strcmp(userCommand, "!!") == 0) { // strcmp() is used to compare the string arguments
+    if (strcmp(user_command, "!!") == 0) { // strcmp() is used to compare the string arguments
         if (*argv == 0) {
             printf("No commands in history.\n");
         }
         return;
     }
   
-    if (strcmp(userCommand, "exit()") == 0) { 
+    if (strcmp(user_command, "exit()") == 0) { 
       exit(0); 
     }
   
     temp_max(args, *argv);
     *argv = 0;
     *has_ampersand = 0;
-    char *ptr = strtok(userCommand, delimiter);
+    char *ptr = strtok(user_command, delimiter);
     while (ptr != NULL) {
         if (ptr[0] == '&') {
             *has_ampersand = 1;
@@ -71,7 +71,7 @@ int main(void) {
         usingPipe = 0;
         printf("osh> ");
         fflush(stdout);
-        readCommandFromUser(args, &has_ampersand, &argv);
+        read_user_command(args, &has_ampersand, &argv);
         pid = fork();
         if (pid == 0) {
             if (argv == 0) {
