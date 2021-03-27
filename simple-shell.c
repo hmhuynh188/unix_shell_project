@@ -18,7 +18,7 @@ void temp_max(char *args[],int argv) {
     }
 }
 
-void readCommandFromUser(char *args[], int *hasAmp, int *argv) {
+void readCommandFromUser(char *args[], int *has_ampersand, int *argv) {
 
     char userCommand[MAXLINE];
     int length = 0;
@@ -44,11 +44,11 @@ void readCommandFromUser(char *args[], int *hasAmp, int *argv) {
   
     temp_max(args, *argv);
     *argv = 0;
-    *hasAmp = 0;
+    *has_ampersand = 0;
     char *ptr = strtok(userCommand, delimiter);
     while (ptr != NULL) {
         if (ptr[0] == '&') {
-            *hasAmp = 1;
+            *has_ampersand = 1;
             ptr = strtok(NULL, delimiter);
             continue;
         }
@@ -64,14 +64,14 @@ int main(void) {
     char *args[MAXLINE / 2 + 1]; 
     int runFlag = 1;
     pid_t pid;
-    int hasAmp = 0;
+    int has_ampersand = 0;
     int argv = 0;
     int usingPipe = 0;
     while (runFlag) {
         usingPipe = 0;
         printf("osh> ");
         fflush(stdout);
-        readCommandFromUser(args, &hasAmp, &argv);
+        readCommandFromUser(args, &has_ampersand, &argv);
         pid = fork();
         if (pid == 0) {
             if (argv == 0) {
@@ -166,7 +166,7 @@ int main(void) {
             }
             exit(1);
         } else if (pid > 0) {
-            if (hasAmp == 0) wait(NULL);
+            if (has_ampersand == 0) wait(NULL);
         } else {
             printf("Error.");
         }
