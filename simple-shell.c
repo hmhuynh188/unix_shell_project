@@ -7,6 +7,8 @@
 #include <sys/types.h>
 
 #define MAXLINE 80
+#define READ_END 0 
+#define WRITE_END 1
 
 void temp_max(char *args[],int argv) {
     int i = 0;
@@ -107,8 +109,8 @@ int main(void) {
                 
                     } else if (strcmp(args[i], "|") == 0) {
                         use_pipe = 1;
-                        int fd1[2];
-                        if (pipe(fd1) == -1) {
+                        int fd[2];
+                        if (pipe(fd) == -1) {
                             fprintf(stderr, "Pipe failed.\n");
                             return 1;
                         }
@@ -127,26 +129,26 @@ int main(void) {
                         int pid_pipe = fork();
                         if (pid_pipe > 0) {
                             wait(NULL);
-                            close(fd1[1]);
-                            dup2(fd1[0], STDIN_FILENO);
-                            close(fd1[0]);
+                            close(fd[1]);
+                            dup2(fd[0], STDIN_FILENO);
+                            close(fd[0]);
                             if (execvp(second[0], second) == -1) {
                                 printf("Invalid.\n");
                                 return 1;
                             }
 
                         } else if (pid_pipe == 0) {
-                            close(fd1[0]);
-                            dup2(fd1[1], STDOUT_FILENO);
-                            close(fd1[1]);
+                            close(fd[0]);
+                            dup2(fd[1], STDOUT_FILENO);
+                            close(fd[1]);
                             if (execvp(first[0], first) == -1) {
                                 printf("Invalid.\n");
                                 return 1;
                             }
                             exit(1);
                         }
-                        close(fd1[0]);
-                        close(fd1[1]);
+                        close(fd[0]);
+                        close(fd[1]);
                         break;
                     }
                 }
