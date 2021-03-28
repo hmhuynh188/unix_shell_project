@@ -4,6 +4,7 @@
 #include <string.h>
 #include <sys/wait.h> // is used with wait() 
 #include <fcntl.h> // changes the properties of a file that is already open 
+#include <sys/types.h>
 
 #define MAXLINE 80
 
