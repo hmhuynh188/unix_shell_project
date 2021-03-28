@@ -77,7 +77,7 @@ int main(void) {
             if (argv == 0) {
                 continue;
             } else {
-                int redirectCase = 0;
+                int redirect = 0;
                 int file;
                 
                 for (int i = 1; i <= argv - 1; i++) {
@@ -90,7 +90,7 @@ int main(void) {
                         dup2(file, STDIN_FILENO);
                         args[i] = NULL;
                         args[i + 1] = NULL;
-                        redirectCase = 1;
+                        redirect = 1;
                         break;
                     } else if (strcmp(args[i], ">") == 0) {
                         file = open(args[i + 1], O_WRONLY | O_CREAT, 0644); // open for writing only 
@@ -101,7 +101,7 @@ int main(void) {
                         dup2(file, STDOUT_FILENO);
                         args[i] = NULL;
                         args[i + 1] = NULL;
-                        redirectCase = 2;
+                        redirect = 2;
                         break;
                 
                     } else if (strcmp(args[i], "|") == 0) {
@@ -156,10 +156,10 @@ int main(void) {
                         return 1;
                     }
                 }
-                if (redirectCase == 1) {
+                if (redirect == 1) {
                     close(STDIN_FILENO);
 
-                } else if (redirectCase == 2) {
+                } else if (redirect == 2) {
                     close(STDOUT_FILENO);
                 }
                 close(file);
