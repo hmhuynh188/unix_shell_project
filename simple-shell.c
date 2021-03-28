@@ -169,7 +169,8 @@ int main(void) {
             }
             exit(1);
         } else if (pid > 0) {
-            if (has_ampersand == 0) wait(NULL);
+            if (has_ampersand == 0) { 
+                wait(NULL);
         } else {
             printf("Error.");
         }
