@@ -82,7 +82,7 @@ int main(void) {
                 
                 for (int i = 1; i <= argv - 1; i++) {
                     if (strcmp(args[i], "<") == 0) {
-                        file = open(args[i + 1], O_RDONLY);
+                        file = open(args[i + 1], O_RDONLY); // open for reading only 
                         if (file == -1 || args[i+1]  == NULL) {
                             printf("Invalid.\n");
                             exit(1);
@@ -93,7 +93,7 @@ int main(void) {
                         redirectCase = 1;
                         break;
                     } else if (strcmp(args[i], ">") == 0) {
-                        file = open(args[i + 1], O_WRONLY | O_CREAT, 0644);
+                        file = open(args[i + 1], O_WRONLY | O_CREAT, 0644); // open for writing only 
                         if (file == -1 || args[i+1]  == NULL) {
                             printf("Invalid.\n");
                             exit(1);
@@ -108,7 +108,7 @@ int main(void) {
                         use_pipe = 1;
                         int fd1[2];
                         if (pipe(fd1) == -1) {
-                            fprintf(stderr, "Pipe Failed\n");
+                            fprintf(stderr, "Pipe failed.\n");
                             return 1;
                         }
                         
